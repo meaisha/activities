@@ -185,11 +185,13 @@ export default {
             date: dateFormatted
           }
           const response = await ActivitiesService.createItem({ data: payload });
+
+          // format the date
+          this.formatDate(response.data);
           
           this.items.push(response.data);
 
-          // format all the dates
-          this.formatActivityDate();
+          
 
         } catch (e) {
           console.log("Error creating activity", e);
@@ -233,6 +235,11 @@ export default {
       this.items.map(item => {
         return (item.date = moment(item.date).format("YYYY-DD-MM"));
       });
+    },
+
+    formatDate(item) {
+      console.log("item", item);
+      item.date = moment(item.date).format("YYYY-DD-MM");
     },
 
     calculateTotalEarned(add, points) {
